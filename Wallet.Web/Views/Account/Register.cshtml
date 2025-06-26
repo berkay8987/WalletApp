@@ -23,7 +23,12 @@
             <input asp-for="Password" type="password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-success w-100">Kayıt Ol</button>
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
     </form>
     <div class="mt-3 text-center">
         Already have an account? <a asp-action="Login" asp-controller="Account">Login</a>
