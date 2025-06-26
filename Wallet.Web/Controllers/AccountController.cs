@@ -36,7 +36,8 @@ namespace Wallet.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            ModelState.AddModelError("", "Invalid Login Attempt");
+            return View(model);
         }
 
         public IActionResult Register()
