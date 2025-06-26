@@ -1,5 +1,6 @@
 networks:
-  walletapp:
+    backend-network:
+    frontend-network:
 
 services:
   walletappdb:
@@ -9,7 +10,7 @@ services:
         - ACCEPT_EULA=Y
         - MSSQL_SA_PASSWORD=password@123!
     networks:
-        - walletapp
+        - backend-network
     ports:
         - "1433:1433"
     volumes:
@@ -27,7 +28,8 @@ services:
         - DB_NAME=WalletApp
         - DB_SA_PASSWORD=password@123!
     networks:
-        - walletapp
+        - backend-network
+        - frontend-network
 
   wallet.web:
     image: ${DOCKER_REGISTRY-}walletweb
@@ -36,6 +38,8 @@ services:
       dockerfile: Wallet.Web/Dockerfile
     depends_on:
         - walletappdb
+    networks:
+        - frontend-network
 
 volumes:
     mssqldata:    
