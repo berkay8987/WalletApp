@@ -10,7 +10,7 @@ using Wallet.Core.Entitites.Models;
 
 namespace Wallet.DataAccess.Context
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext()
         {
@@ -27,7 +27,8 @@ namespace Wallet.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasKey(u => u.UserId);
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Product>().HasKey(u => u.ProductId);
             modelBuilder.Entity<Transaction>().HasKey(u => u.TransactionId);
             modelBuilder.Entity<TransactionDetails>().HasKey(u => u.TransactionDetailsId);
