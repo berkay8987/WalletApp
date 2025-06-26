@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Web", "Wallet.Web\Wallet.Web.csproj", "{40602AB4-8A7A-4312-803B-7BB792A699C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.API", "Wallet.API\Wallet.API.csproj", "{A7909EC5-F7A0-457C-923F-652A995B9C09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Core", "Wallet.Core\Wallet.Core.csproj", "{1A8AF3D7-CD88-41EC-B10F-937A9A3E3670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Business", "Wallet.Business\Wallet.Business.csproj", "{9BBA926E-2D8C-4097-9D13-D5579D4B363C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.DataAccess", "Wallet.DataAccess\Wallet.DataAccess.csproj", "{17A512CE-D032-4772-8B9C-CD5EC3223F8E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40602AB4-8A7A-4312-803B-7BB792A699C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40602AB4-8A7A-4312-803B-7BB792A699C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40602AB4-8A7A-4312-803B-7BB792A699C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40602AB4-8A7A-4312-803B-7BB792A699C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7909EC5-F7A0-457C-923F-652A995B9C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7909EC5-F7A0-457C-923F-652A995B9C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7909EC5-F7A0-457C-923F-652A995B9C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7909EC5-F7A0-457C-923F-652A995B9C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A8AF3D7-CD88-41EC-B10F-937A9A3E3670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A8AF3D7-CD88-41EC-B10F-937A9A3E3670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A8AF3D7-CD88-41EC-B10F-937A9A3E3670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A8AF3D7-CD88-41EC-B10F-937A9A3E3670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BBA926E-2D8C-4097-9D13-D5579D4B363C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BBA926E-2D8C-4097-9D13-D5579D4B363C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BBA926E-2D8C-4097-9D13-D5579D4B363C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BBA926E-2D8C-4097-9D13-D5579D4B363C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A512CE-D032-4772-8B9C-CD5EC3223F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A512CE-D032-4772-8B9C-CD5EC3223F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A512CE-D032-4772-8B9C-CD5EC3223F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A512CE-D032-4772-8B9C-CD5EC3223F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A9C5ED7-02BC-47C0-BA20-040C168A78A3}
+	EndGlobalSection
+EndGlobal

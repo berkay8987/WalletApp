@@ -1,0 +1,41 @@
+networks:
+  walletapp:
+
+services:
+  walletappdb:
+    container_name: app-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=password@123!
+    networks:
+        - walletapp
+    ports:
+        - "1433:1433"
+    volumes:
+        - mssqldata:/var/opt/mssql
+
+  wallet.api:
+    image: ${DOCKER_REGISTRY-}walletapi
+    build:
+      context: .
+      dockerfile: Wallet.API/Dockerfile
+    depends_on:
+        - walletappdb
+    environment:
+        - DB_HOST=walletappdb
+        - DB_NAME=WalletApp
+        - DB_SA_PASSWORD=password@123!
+    networks:
+        - walletapp
+
+  wallet.web:
+    image: ${DOCKER_REGISTRY-}walletweb
+    build:
+      context: .
+      dockerfile: Wallet.Web/Dockerfile
+    depends_on:
+        - walletappdb
+
+volumes:
+    mssqldata:    
