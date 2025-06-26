@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,14 @@ var connectionString = $"Server={dbHost},1433;Database={dbName};User Id=sa;Passw
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<User, IdentityRole>(options => {
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 
