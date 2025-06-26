@@ -17,9 +17,16 @@ namespace Wallet.API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            return Ok("1");
+            var result = await _signInManager.PasswordSignInAsync(model.Username!, model.Password!, model.RememberMe, false);
+
+            if (result.Succeeded)
+            {
+                return Ok(model);
+            }
+
+            return BadRequest(model);
         }
     }
 }
