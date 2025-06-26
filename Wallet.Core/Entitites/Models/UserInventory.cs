@@ -9,7 +9,7 @@ namespace Wallet.Core.Entitites.Models
     public class UserInventory
     {
         public int InventoryId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
 
