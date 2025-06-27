@@ -43,11 +43,7 @@ namespace Wallet.API.Controllers
 
             var jwtToken = GenerateJwtToken(user);
 
-            return Ok(new
-            {
-                token = jwtToken,
-                username = user.UserName
-            });
+            return Ok(jwtToken);
         }
 
         [HttpPost("register")]
@@ -77,6 +73,7 @@ namespace Wallet.API.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
