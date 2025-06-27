@@ -10,10 +10,12 @@ namespace Wallet.API.Controllers
     public class AuthController : Controller
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public AuthController(SignInManager<User> signInManager)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpPost("login")]
@@ -28,5 +30,28 @@ namespace Wallet.API.Controllers
 
             return BadRequest(model);
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+        {
+            // Check if user exists.
+            var userExist = await _userManager.FindByNameAsync(model.Username);
+            if (userExist != null)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, model);
+            }
+
+            User user = new User()
+            {
+                Firstname = model.Firstname,
+                Lastname = model.Lastname,
+                UserName = model.Username,
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            
+            return result.Succeeded ? Ok(model) : BadRequest(model);
+        }
+
     }
 }
