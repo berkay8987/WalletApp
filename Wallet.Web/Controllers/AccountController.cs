@@ -45,6 +45,25 @@ namespace Wallet.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var client = _httpClientFactory.CreateClient("WalletAPI");
+            var response = await client.PostAsJsonAsync("api/Auth/register", model);
+
+            if (response.IsSuccessStatusCode) 
+            { 
+
+            }
+
+            return View(model);
+        }
+
         public IActionResult Logout()
         {
             return View();
