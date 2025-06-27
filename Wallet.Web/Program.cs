@@ -1,16 +1,12 @@
+using Wallet.Web.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient("WalletAPI", client =>
-{
-    client.BaseAddress = new Uri("https://wallet.api:8081/");
-}).ConfigurePrimaryHttpMessageHandler(() => 
-    new HttpClientHandler
-    {
-        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    });
+// My custom services
+builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
