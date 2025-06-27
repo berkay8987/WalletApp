@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Wallet.Core.Entitites.ViewModels;
 
 namespace Wallet.Web.Controllers
@@ -28,16 +33,35 @@ namespace Wallet.Web.Controllers
             var client = _httpClientFactory.CreateClient("WalletAPI");
             var response = await client.PostAsJsonAsync("/api/Auth/login", model);
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                var token = await response.Content.ReadAsStringAsync();
-                // HttpContext.Session.SetString("JWToken", token);
-
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", "Login failed.");
+                return View(model);
             }
 
-            ModelState.AddModelError("", "Invalid Login Attempt");
-            return View(model);
+            var token = await response.Content.ReadAsStringAsync();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            var claims = jwtToken.Claims.ToList();
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = model.RememberMe,
+                ExpiresUtc = model.RememberMe
+                            ? DateTimeOffset.UtcNow.AddDays(30)
+                            : DateTimeOffset.UtcNow.AddHours(1)
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Register()
@@ -57,16 +81,18 @@ namespace Wallet.Web.Controllers
             var response = await client.PostAsJsonAsync("api/Auth/register", model);
 
             if (response.IsSuccessStatusCode) 
-            { 
-
+            {
+                return RedirectToAction("Login", "Account");
             }
 
             return View(model);
         }
 
-        public IActionResult Logout()
+        [HttpPost]
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
     }
 }
