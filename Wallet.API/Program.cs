@@ -17,43 +17,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCustomServices(builder.Configuration);
 
-#region Swagger Configuration
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter your token in the format: Bearer {your token}",
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] { }
-        }
-    });
-});
-#endregion
-
-#region Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["IdentityServerUrl"];
-    options.Audience = "https://wallet.web:8080";
-    options.RequireHttpsMetadata = false;
-});
-#endregion
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
