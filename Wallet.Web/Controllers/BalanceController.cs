@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Wallet.Core.Entitites.ViewModels;
 
 namespace Wallet.Web.Controllers
 {
+    [Authorize]
     public class BalanceController : Controller
     {
         public IActionResult Balance()
@@ -17,6 +19,7 @@ namespace Wallet.Web.Controllers
             {
                 return BadRequest("Model not valid.");
             }
+
 
             return RedirectToAction("Index", "Home");
         }
