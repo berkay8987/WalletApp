@@ -20,17 +20,16 @@ namespace Wallet.Web.ViewComponents
             var client = _httpClientFactory.CreateClient("WalletAPI");
             var response = await client.GetAsync("api/User/getbalance");
 
-            if (!response.IsSuccessStatusCode) 
+            if (response.IsSuccessStatusCode) 
             {
-                ModelState.AddModelError("", "Failed");
-                return View(0m);
+                var balanceStr = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(balanceStr);
+                decimal balance = decimal.TryParse(balanceStr, out var value) ? value : 0m;
+                return View(balance);
             }
 
-            var balanceStr = await response.Content.ReadAsStringAsync();
-            decimal balance = decimal.TryParse(balanceStr, out var value) ? value : 0m;
-
-            return View(balance);
+            ModelState.AddModelError("", "Failed");
+            return View(-1m);
         }
-
     }
 }
