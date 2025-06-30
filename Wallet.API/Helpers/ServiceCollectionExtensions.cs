@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Wallet.Core.Entitites.Models;
+using Wallet.DataAccess.Abstract;
+using Wallet.DataAccess.Concrete;
 using Wallet.DataAccess.Context;
 
 namespace Wallet.API.Helpers
@@ -85,6 +87,8 @@ namespace Wallet.API.Helpers
                     };
                 });
             #endregion
+
+            services.AddScoped<IUserDal, UserDal>();
 
             return services;
         }
