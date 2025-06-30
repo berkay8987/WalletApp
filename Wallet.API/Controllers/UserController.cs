@@ -17,12 +17,20 @@ namespace Wallet.API.Controllers
             _userDal = userDal;
         }
 
-        [HttpGet("getbalance")]
-        public async Task<IActionResult> GetBalance()
+        [HttpGet("getBalance")]
+        public IActionResult GetBalance()
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
             var balance = _userDal.GetBalanceByUserId(userId);
             return Ok(balance);
+        }
+
+        [HttpPost("addBalance")]
+        public IActionResult AddBalance(decimal value)
+        {
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var newBalance = _userDal.AddBalanceByUserId(userId, value);
+            return Ok(newBalance);
         }
     }
 }
