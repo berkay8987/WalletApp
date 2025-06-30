@@ -75,14 +75,26 @@ namespace Wallet.API.Controllers
         [HttpPost("test")]
         public IActionResult Test()
         {
-            return Ok(1);
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized("User not authenticated.");
+            }
+
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            
+            if (userIdClaim == null)
+            {
+                return BadRequest("UserId claim not found.");
+            }
+
+            return Ok(userIdClaim.Value);
         }
 
         private string GenerateJwtToken(User user)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
