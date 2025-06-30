@@ -1,4 +1,5 @@
 ﻿using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +27,7 @@ namespace Wallet.API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
@@ -46,6 +48,7 @@ namespace Wallet.API.Controllers
             return Ok(jwtToken);
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
@@ -66,6 +69,13 @@ namespace Wallet.API.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             
             return result.Succeeded ? Ok(model) : BadRequest(model);
+        }
+
+        [Authorize]
+        [HttpPost("test")]
+        public IActionResult Test()
+        {
+            return Ok(1);
         }
 
         private string GenerateJwtToken(User user)
