@@ -5,8 +5,8 @@ using Wallet.DataAccess.Abstract;
 
 namespace Wallet.API.Controllers
 {
-    [ApiController]
     [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
