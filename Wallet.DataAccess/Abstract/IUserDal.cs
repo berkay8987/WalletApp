@@ -9,5 +9,7 @@ namespace Wallet.DataAccess.Abstract
     public interface IUserDal
     {
         public decimal GetBalanceByUserId(string UserId);
+
+        public decimal AddBalanceByUserId(string userId, decimal balance);
     }
 }
