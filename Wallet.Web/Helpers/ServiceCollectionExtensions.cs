@@ -24,6 +24,9 @@ namespace Wallet.Web.Helpers
                     options.LogoutPath = "/Account/logout";
                 });
 
+
+
+
             return services;
         }
     }
