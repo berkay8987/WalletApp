@@ -18,12 +18,11 @@ namespace Wallet.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient("WalletAPI");
-            var response = await client.GetAsync("api/User/getbalance");
+            var response = await client.GetAsync("api/User/getBalance");
 
             if (response.IsSuccessStatusCode) 
             {
                 var balanceStr = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(balanceStr);
                 decimal balance = decimal.TryParse(balanceStr, out var value) ? value : 0m;
                 return View(balance);
             }
