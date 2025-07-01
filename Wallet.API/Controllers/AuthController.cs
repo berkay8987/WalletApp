@@ -44,8 +44,7 @@ namespace Wallet.API.Controllers
                 return Unauthorized("Password wrong");
             }
 
-            JwtTokenTool tokenGen = new JwtTokenTool();
-            var jwtToken = GenerateJwtToken(user);
+            var jwtToken = JwtTokenGenerator.GenerateJwtToken(user);
 
             return Ok(jwtToken);
         }
