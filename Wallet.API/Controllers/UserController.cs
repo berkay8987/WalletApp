@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Wallet.Core.Entitites.ViewModels;
 using Wallet.DataAccess.Abstract;
 
 namespace Wallet.API.Controllers
@@ -26,10 +27,10 @@ namespace Wallet.API.Controllers
         }
 
         [HttpPost("AddBalance")]
-        public IActionResult AddBalance(decimal value)
+        public IActionResult AddBalance([FromBody] UpdateBalanceViewModel model)
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var newBalance = _userDal.AddBalanceByUserId(userId, value);
+            var newBalance = _userDal.AddBalanceByUserId(userId, model.Balance);
             return Ok(newBalance);
         }
     }
