@@ -32,12 +32,32 @@ namespace Wallet.API.Controllers
             return Ok(balance);
         }
 
+        /// <summary>
+        ///     Increases the balance by the value and returns the new balance of the currently logged-in user
+        /// </summary>
+        /// <param name="value">Amount to increase the balance</param>
+        /// <returns></returns>
         [HttpPost("AddBalance")]
-        public IActionResult AddBalance([FromBody] UpdateBalanceViewModel model)
+        public IActionResult AddBalance([FromBody] decimal value)
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var newBalance = _userDal.AddBalanceByUserId(userId, model.Balance);
+            var newBalance = _userDal.AddBalanceByUserId(userId, value);
             return Ok(newBalance);
         }
+
+
+        /// <summary>
+        ///     Deacreses the balance by the value and returns the new balance of the currently logged-in user
+        /// </summary>
+        /// <param name="value">Amount to decrease the balance</param>
+        /// <returns></returns>
+        [HttpPost("RemoveBalance")]
+        public IActionResult RemoveBalance([FromBody] decimal value)
+        {
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var newBalance = _userDal.RemoveBalanceByUserId(userId, value);
+            return Ok(newBalance);
+        }
+
     }
 }
