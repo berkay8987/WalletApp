@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,10 +12,13 @@ namespace Wallet.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IDistributedCache _cache;
 
-        public AccountController(IHttpClientFactory httpClientFactory)
+        public AccountController(IHttpClientFactory httpClientFactory,
+                                 IDistributedCache cache)
         {
             _httpClientFactory = httpClientFactory;
+            _cache = cache;
         }
 
         public IActionResult Login()
@@ -91,6 +95,7 @@ namespace Wallet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            await _cache.RemoveAsync("AccessToken");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
