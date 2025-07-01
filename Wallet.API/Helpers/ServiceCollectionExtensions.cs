@@ -90,6 +90,12 @@ namespace Wallet.API.Helpers
 
             services.AddScoped<IUserDal, UserDal>();
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.GetSection("Redis")["ConnectionString"];
+                options.InstanceName = "WalletAppRedis";
+            });
+
             return services;
         }
     }
