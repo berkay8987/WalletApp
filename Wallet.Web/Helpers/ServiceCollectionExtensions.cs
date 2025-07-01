@@ -1,12 +1,14 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace Wallet.Web.Helpers
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomServices(this IServiceCollection services)
+        public static IServiceCollection AddCustomServices(this IServiceCollection services,
+                                                           IConfiguration configuration)
         {
             services.AddHttpClient("WalletAPI", client =>
             {
@@ -24,8 +26,11 @@ namespace Wallet.Web.Helpers
                     options.LogoutPath = "/Account/logout";
                 });
 
-
-
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.GetSection("Redis")["ConnectionString"];
+                options.InstanceName = "WalletAppRedis";
+            });
 
             return services;
         }
