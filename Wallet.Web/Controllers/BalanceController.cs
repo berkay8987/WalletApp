@@ -42,7 +42,7 @@ namespace Wallet.Web.Controllers
             var client = _httpClientFactory.CreateClient("WalletAPI");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.PostAsJsonAsync("api/User/AddBalance", model);
+            var response = await client.PostAsJsonAsync("api/User/AddBalance", model.Balance);
 
             if (!response.IsSuccessStatusCode)
             {
