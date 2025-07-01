@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using Wallet.Core.Entitites.Models;
 using Wallet.Core.Entitites.ViewModels;
+using Wallet.API.Tools;
 
 namespace Wallet.API.Controllers
 {
@@ -43,6 +44,7 @@ namespace Wallet.API.Controllers
                 return Unauthorized("Password wrong");
             }
 
+            JwtTokenTool tokenGen = new JwtTokenTool();
             var jwtToken = GenerateJwtToken(user);
 
             return Ok(jwtToken);
@@ -88,29 +90,6 @@ namespace Wallet.API.Controllers
             }
 
             return Ok(userIdClaim.Value);
-        }
-
-        private string GenerateJwtToken(User user)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudiance"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
