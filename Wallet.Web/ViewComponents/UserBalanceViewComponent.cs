@@ -32,7 +32,7 @@ namespace Wallet.Web.ViewComponents
             var client = _httpClientFactory.CreateClient("WalletAPI");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.GetAsync("api/User/getBalance");
+            var response = await client.GetAsync("api/User/GetBalance");
 
             if (response.IsSuccessStatusCode) 
             {

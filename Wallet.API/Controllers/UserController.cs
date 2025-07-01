@@ -17,7 +17,7 @@ namespace Wallet.API.Controllers
             _userDal = userDal;
         }
 
-        [HttpGet("getBalance")]
+        [HttpGet("GetBalance")]
         public IActionResult GetBalance()
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
@@ -25,7 +25,7 @@ namespace Wallet.API.Controllers
             return Ok(balance);
         }
 
-        [HttpPost("addBalance")]
+        [HttpPost("AddBalance")]
         public IActionResult AddBalance(decimal value)
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;

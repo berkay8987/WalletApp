@@ -35,7 +35,7 @@ namespace Wallet.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -63,7 +63,7 @@ namespace Wallet.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             // Check if user exists.
@@ -86,7 +86,7 @@ namespace Wallet.API.Controllers
         }
 
         [Authorize]
-        [HttpPost("test")]
+        [HttpPost("GetUserId")]
         public IActionResult Test()
         {
             if (!User.Identity.IsAuthenticated)

@@ -31,7 +31,7 @@ namespace Wallet.Web.Controllers
             }
 
             var client = _httpClientFactory.CreateClient("WalletAPI");
-            var response = await client.PostAsJsonAsync("/api/Auth/login", model);
+            var response = await client.PostAsJsonAsync("/api/Auth/Login", model);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -78,7 +78,7 @@ namespace Wallet.Web.Controllers
             }
 
             var client = _httpClientFactory.CreateClient("WalletAPI");
-            var response = await client.PostAsJsonAsync("api/Auth/register", model);
+            var response = await client.PostAsJsonAsync("api/Auth/Register", model);
 
             if (response.IsSuccessStatusCode) 
             {
