@@ -10,6 +10,8 @@ namespace Wallet.DataAccess.Abstract
     {
         public decimal GetBalanceByUserId(string UserId);
 
-        public decimal AddBalanceByUserId(string userId, decimal balance);
+        public decimal AddBalanceByUserId(string userId, decimal value);
+
+        public decimal RemoveBalanceByUserId(string userId, decimal value);
     }
 }
