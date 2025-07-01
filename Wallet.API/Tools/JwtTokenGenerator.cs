@@ -3,7 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Wallet.Core.Entitites.Models;
-using Wallet.API.Tools;
 
 namespace Wallet.API.Tools
 {
