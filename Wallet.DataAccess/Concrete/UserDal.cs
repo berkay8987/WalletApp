@@ -17,10 +17,10 @@ namespace Wallet.DataAccess.Concrete
             _context = context;
         }
 
-        public decimal AddBalanceByUserId(string userId, decimal balance)
+        public decimal AddBalanceByUserId(string userId, decimal value)
         {
             var user = _context.Users.Find(userId);
-            user.Balance += balance;
+            user.Balance += value;
             _context.SaveChanges();
             return user.Balance;
         }
@@ -28,6 +28,21 @@ namespace Wallet.DataAccess.Concrete
         public decimal GetBalanceByUserId(string userId)
         {
             var user = _context.Users.Find(userId);
+            return user.Balance;
+        }
+
+        public decimal RemoveBalanceByUserId(string userId, decimal value)
+        {
+            var user = _context.Users.Find(userId);
+            if ((user.Balance - value) < 0) {
+                user.Balance = 0;
+                _context.SaveChanges();
+            }
+            else
+            {
+                user.Balance -= value;
+                _context.SaveChanges();
+            }
             return user.Balance;
         }
     }
