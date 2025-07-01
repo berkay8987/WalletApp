@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // My custom services
-builder.Services.AddCustomServices();
+builder.Services.AddCustomServices(builder.Configuration);
 
 var app = builder.Build();
 
