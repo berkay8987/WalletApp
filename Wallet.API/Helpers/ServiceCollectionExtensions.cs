@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
@@ -94,6 +95,13 @@ namespace Wallet.API.Helpers
             {
                 options.Configuration = configuration.GetSection("Redis")["ConnectionString"];
                 options.InstanceName = "WalletAppRedis";
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             return services;
