@@ -10,6 +10,7 @@ using System.Text;
 using Wallet.Core.Entitites.Models;
 using Wallet.Core.Entitites.ViewModels;
 using Wallet.API.Tools;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Wallet.API.Controllers
 {
@@ -20,12 +21,17 @@ namespace Wallet.API.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IDistributedCache _cache;
 
-        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration)
+        public AuthController(SignInManager<User> signInManager, 
+                              UserManager<User> userManager, 
+                              IConfiguration configuration,
+                              IDistributedCache cache)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _cache = cache;
         }
 
         [AllowAnonymous]
@@ -45,6 +51,13 @@ namespace Wallet.API.Controllers
             }
 
             var jwtToken = JwtTokenGenerator.GenerateJwtToken(user);
+
+            var cacheOptions = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
+            };
+
+            await _cache.SetStringAsync("AccessToken", jwtToken, cacheOptions);
 
             return Ok(jwtToken);
         }
