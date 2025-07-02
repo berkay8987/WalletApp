@@ -15,6 +15,13 @@ namespace Wallet.API.Controllers
             _productDal = productDal;
         }
 
+        /// <summary>
+        ///     Creates a product with specified name and price.
+        /// </summary>
+        /// <param name="name">Name of the product</param>
+        /// <param name="price">Price of the product</param>
+        /// <returns>Returns the product created.</returns>
+
         [HttpPost("CreateProduct")]
         public IActionResult CreateProduct(string name, decimal price)
         {
@@ -28,6 +35,11 @@ namespace Wallet.API.Controllers
                 : BadRequest("Failed to create a product");
         }
 
+        /// <summary>
+        ///     Returns all products in db
+        /// </summary>
+        /// <returns>List of products</returns>
+
         [HttpGet("GetAllProducts")]
         public IActionResult GetAllProducts()
         {
@@ -37,12 +49,21 @@ namespace Wallet.API.Controllers
                 : BadRequest("Failed to get products");
         }
 
+        /// <summary>
+        ///     Not implemented yet.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("UpdateProductById")]
         public IActionResult UpdateProductById()
         {
             return BadRequest("Not implemented");
         }
 
+        /// <summary>
+        ///     Deletes a product by id.
+        /// </summary>
+        /// <param name="id">Id of the product to delete</param>
+        /// <returns>Http.Success or Http.BadRequest</returns>
         [HttpPost("DeleteProductById")]
         public IActionResult DeleteProductById(int id)
         {
