@@ -46,6 +46,19 @@ namespace Wallet.DataAccess.Concrete
             return products;
         }
 
+        public Product UpdateProductById(int id, decimal price)
+        {
+            var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
+            if (product == null)
+            {
+                return null;
+            }
+
+            product.Price = price;
+            _context.SaveChanges();
+            return product;
+        }
+
         public bool DeleteProduct(int id)
         {
             var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
