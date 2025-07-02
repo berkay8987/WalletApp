@@ -90,6 +90,7 @@ namespace Wallet.API.Helpers
             #endregion
 
             services.AddScoped<IUserDal, UserDal>();
+            services.AddScoped<IProductDal, ProductDal>();
 
             services.AddStackExchangeRedisCache(options =>
             {
