@@ -13,6 +13,8 @@ namespace Wallet.DataAccess.Abstract
 
         List<Product> GetAllProducts();
 
+        Product UpdateProductById(int id, decimal price);
+
         bool DeleteProduct(int id);
     }
 }
