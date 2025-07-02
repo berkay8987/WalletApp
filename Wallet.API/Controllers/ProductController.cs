@@ -50,13 +50,18 @@ namespace Wallet.API.Controllers
         }
 
         /// <summary>
-        ///     Not implemented yet.
+        ///     Update a product's price by id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Id of the product to update</param>
+        /// <param name="price">New price for the product</param>
+        /// <returns>Updated product</returns>
         [HttpPost("UpdateProductById")]
-        public IActionResult UpdateProductById()
+        public IActionResult UpdateProductById(int id, decimal price)
         {
-            return BadRequest("Not implemented");
+            var product = _productDal.UpdateProductById(id, price);
+            return product != null
+                ? Ok(product)
+                : BadRequest("Failed to update product.");
         }
 
         /// <summary>
