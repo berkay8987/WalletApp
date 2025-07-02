@@ -34,6 +34,12 @@ namespace Wallet.API.Controllers
             _cache = cache;
         }
 
+
+        /// <summary>
+        ///     Logs in a user with username and password.
+        /// </summary>
+        /// <param name="model">User model</param>
+        /// <returns>Returns an access token</returns>
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
@@ -62,6 +68,11 @@ namespace Wallet.API.Controllers
             return Ok(jwtToken);
         }
 
+        /// <summary>
+        ///     Registers a user to identity user db.
+        /// </summary>
+        /// <param name="model">User to register</param>
+        /// <returns>Http.Success or Http.BadRequest</returns>
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
@@ -85,6 +96,10 @@ namespace Wallet.API.Controllers
             return result.Succeeded ? Ok(model) : BadRequest(model);
         }
 
+        /// <summary>
+        ///     This is an test API for authorization
+        /// </summary>
+        /// <returns>Returns the authorized user's UserId</returns>
         [Authorize]
         [HttpPost("GetUserId")]
         public IActionResult Test()
