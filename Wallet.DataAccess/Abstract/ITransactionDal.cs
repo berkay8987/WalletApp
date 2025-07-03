@@ -9,6 +9,8 @@ namespace Wallet.DataAccess.Abstract
 {
     public interface ITransactionDal
     {
+        Transaction CreateTransaction(Transaction transaction);
+
         List<Transaction> GetAllTransactions(string userId);
     }
 }
