@@ -1,4 +1,5 @@
-﻿@using Wallet.Core.Entitites.ViewModels;
+﻿@using Wallet.Core.Entitites.Enums
+@using Wallet.Core.Entitites.ViewModels;
 
 @model WalletDashboardViewModel;
 
@@ -146,8 +147,10 @@
                     {
                         <tr>
                             <td>@transaction.Date</td>
-                            <td>Transaction type</td>
-                            <td>@transaction.TotalPrice</td>
+                            <td>@transaction.TransactionType.ToString()</td>
+                            <td class="@(transaction.TransactionType == TransactionType.AddBalance ? "amount-add" : "amount-subtract")">
+                                @transaction.TotalPrice
+                            </td>
                             <td>Description</td>
                         </tr>
                     }
