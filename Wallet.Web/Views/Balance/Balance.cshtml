@@ -7,7 +7,7 @@
 <div class="container mt-5" style="max-width: 400px;">
     <h2>Update Balance</h2>
 
-    <form asp-action="UpdateBalance" method="post">
+    <form asp-action="AddBalance" method="post">
         <div class="mb-3">
             <label asp-for="Username" class="form-label"></label>
             <input asp-for="Username" class="form-control" readonly value=@User.Identity.Name/>
