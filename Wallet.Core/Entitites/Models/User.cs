@@ -22,6 +22,8 @@ namespace Wallet.Core.Entitites.Models
 
         public decimal Balance { get; set; }
 
+        public DateTime LastUpdated { get; set; }
+
         public ICollection<UserInventory> Inventories { get; set; } = new List<UserInventory>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
