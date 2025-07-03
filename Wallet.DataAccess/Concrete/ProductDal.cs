@@ -32,18 +32,20 @@ namespace Wallet.DataAccess.Concrete
             {
                 return false;
             }
-            
         }
 
         public List<Product> GetAllProducts()
         {
-            var products = _context.Products.ToList();
-            if (products == null)
+            try
             {
-                return null;
-            }
+                var products = _context.Products.ToList();
+                return products;
 
-            return products;
+            } 
+            catch ( Exception ex )
+            {
+                throw new ArgumentNullException(ex.Message);
+            }
         }
 
         public Product UpdateProductById(int id, decimal price)
