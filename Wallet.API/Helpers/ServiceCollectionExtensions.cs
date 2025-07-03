@@ -91,6 +91,7 @@ namespace Wallet.API.Helpers
 
             services.AddScoped<IUserDal, UserDal>();
             services.AddScoped<IProductDal, ProductDal>();
+            services.AddScoped<ITransactionDal, TransactionDal>();
 
             services.AddStackExchangeRedisCache(options =>
             {
