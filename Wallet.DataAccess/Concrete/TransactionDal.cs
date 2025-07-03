@@ -18,6 +18,13 @@ namespace Wallet.DataAccess.Concrete
             _context = context;
         }
 
+        public Transaction CreateTransaction(Transaction transaction)
+        {
+            _context.Transactions.Add(transaction);
+            _context.SaveChanges();
+            return transaction;
+        }
+
         public List<Transaction> GetAllTransactions(string userId)
         {
             var transactions = _context.Transactions.Where(u => u.UserId == userId).ToList();
