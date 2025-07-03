@@ -59,5 +59,28 @@ namespace Wallet.API.Controllers
             return Ok(newBalance);
         }
 
+        /// <summary>
+        ///     Returns the last time that the balance of the currently logged-in user changed.
+        /// </summary>
+        /// <returns>DateTime LastUpdated</returns>
+        [HttpGet("GetLastUpdated")]
+        public IActionResult GetLastUpdated()
+        {
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var lastUpdated = _userDal.GetLastUpdatedByUserId(userId);
+            return Ok(lastUpdated);
+        }
+
+        /// <summary>
+        ///     Return the user associated with the user id.
+        /// </summary>
+        /// <returns>User user</returns>
+        [HttpGet("GetUserInfo")]
+        public IActionResult GetUserInfo()
+        {
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var user = _userDal.GetUserbyUserId(userId);
+            return Ok(user);
+        }
     }
 }
