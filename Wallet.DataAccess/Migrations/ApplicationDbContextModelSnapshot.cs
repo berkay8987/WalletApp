@@ -264,6 +264,9 @@ namespace Wallet.DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Lastname")
                         .IsRequired()
                         .HasMaxLength(20)
