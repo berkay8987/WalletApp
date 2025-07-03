@@ -21,7 +21,6 @@ namespace Wallet.API.Controllers
         /// <param name="name">Name of the product</param>
         /// <param name="price">Price of the product</param>
         /// <returns>Returns the product created.</returns>
-
         [HttpPost("CreateProduct")]
         public IActionResult CreateProduct(string name, decimal price)
         {
@@ -39,7 +38,6 @@ namespace Wallet.API.Controllers
         ///     Returns all products in db
         /// </summary>
         /// <returns>List of products</returns>
-
         [HttpGet("GetAllProducts")]
         public IActionResult GetAllProducts()
         {
