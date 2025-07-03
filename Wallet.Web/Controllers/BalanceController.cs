@@ -24,8 +24,8 @@ namespace Wallet.Web.Controllers
             return View();
         }
 
-        [HttpPost("UpdateBalance")]
-        public async Task<IActionResult> UpdateBalance(UpdateBalanceViewModel model) 
+        [HttpPost("AddBalance")]
+        public async Task<IActionResult> AddBalance(UpdateBalanceViewModel UpdateBalance) 
         { 
             if (!ModelState.IsValid)
             {
@@ -36,21 +36,50 @@ namespace Wallet.Web.Controllers
             if (token == null)
             {
                 ModelState.AddModelError("", "Failed to update balance.");
-                return View(model);
+                return View(UpdateBalance);
             }
 
             var client = _httpClientFactory.CreateClient("WalletAPI");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.PostAsJsonAsync("api/User/AddBalance", model.Balance);
+            var response = await client.PostAsJsonAsync("api/User/AddBalance", UpdateBalance.Balance);
 
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError("", "Failed to update balance.");
-                return View(model);
+                return View(UpdateBalance);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "WalletDashboard");
+        }
+
+        [HttpPost("SubtractBalance")]
+        public async Task<IActionResult> SubtractBalance(UpdateBalanceViewModel UpdateBalance)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model not valid.");
+            }
+
+            var token = await _cache.GetStringAsync("AccessToken");
+            if (token == null)
+            {
+                ModelState.AddModelError("", "Failed to update balance.");
+                return View(UpdateBalance);
+            }
+
+            var client = _httpClientFactory.CreateClient("WalletAPI");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.PostAsJsonAsync("api/User/RemoveBalance", UpdateBalance.Balance);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Failed to update balance.");
+                return View(UpdateBalance);
+            }
+
+            return RedirectToAction("Index", "WalletDashboard");
         }
     }
 }
