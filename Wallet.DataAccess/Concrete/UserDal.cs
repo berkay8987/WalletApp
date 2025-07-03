@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
 using Wallet.DataAccess.Context;
 
@@ -21,6 +22,7 @@ namespace Wallet.DataAccess.Concrete
         {
             var user = _context.Users.Find(userId);
             user.Balance += value;
+            user.LastUpdated = DateTime.UtcNow;
             _context.SaveChanges();
             return user.Balance;
         }
@@ -35,15 +37,27 @@ namespace Wallet.DataAccess.Concrete
         {
             var user = _context.Users.Find(userId);
             if ((user.Balance - value) < 0) {
-                user.Balance = 0;
-                _context.SaveChanges();
+                user.Balance = 0;  
             }
             else
             {
                 user.Balance -= value;
-                _context.SaveChanges();
             }
+            user.LastUpdated = DateTime.UtcNow;
+            _context.SaveChanges();
             return user.Balance;
+        }
+
+        public DateTime GetLastUpdatedByUserId(string userId)
+        {
+            var user = _context.Users.Find(userId);
+            return user.LastUpdated;
+        }
+
+        public User GetUserbyUserId(string userId)
+        {
+            var user = _context.Users.Find(userId);
+            return user;
         }
     }
 }
