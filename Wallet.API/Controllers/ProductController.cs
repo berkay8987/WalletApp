@@ -53,7 +53,7 @@ namespace Wallet.API.Controllers
         /// <param name="id">Id of the product to update</param>
         /// <param name="price">New price for the product</param>
         /// <returns>Updated product</returns>
-        [HttpPost("UpdateProductById")]
+        [HttpPut("UpdateProductById")]
         public IActionResult UpdateProductById(int id, decimal price)
         {
             var product = _productDal.UpdateProductById(id, price);
