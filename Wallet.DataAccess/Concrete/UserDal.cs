@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
 using Wallet.DataAccess.Context;
+using Wallet.Core.Entitites.Enums;
 
 namespace Wallet.DataAccess.Concrete
 {
     public class UserDal: IUserDal
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITransactionDal _transactionDal;
 
-        public UserDal(ApplicationDbContext context)
+        public UserDal(ApplicationDbContext context, 
+                       ITransactionDal transactionDal)
         {
             _context = context;
+            _transactionDal = transactionDal;
         }
 
         public decimal AddBalanceByUserId(string userId, decimal value)
@@ -23,6 +27,14 @@ namespace Wallet.DataAccess.Concrete
             var user = _context.Users.Find(userId);
             user.Balance += value;
             user.LastUpdated = DateTime.UtcNow;
+            Transaction transaction = new Transaction
+            {
+                UserId = userId,
+                TotalPrice = value,
+                Date = DateTime.UtcNow,
+                TransactionType = TransactionType.AddBalance,
+            };
+            _transactionDal.CreateTransaction(transaction);
             _context.SaveChanges();
             return user.Balance;
         }
@@ -44,6 +56,14 @@ namespace Wallet.DataAccess.Concrete
                 user.Balance -= value;
             }
             user.LastUpdated = DateTime.UtcNow;
+            Transaction transaction = new Transaction
+            {
+                UserId = userId,
+                TotalPrice = value,
+                Date = DateTime.UtcNow,
+                TransactionType = TransactionType.RemoveBalance,
+            };
+            _transactionDal.CreateTransaction(transaction);
             _context.SaveChanges();
             return user.Balance;
         }
