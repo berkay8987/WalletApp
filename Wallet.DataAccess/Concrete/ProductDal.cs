@@ -50,28 +50,32 @@ namespace Wallet.DataAccess.Concrete
 
         public Product UpdateProductById(int id, decimal price)
         {
-            var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
-            if (product == null)
+            try
             {
-                return null;
+                var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
+                product.Price = price;
+                _context.SaveChanges();
+                return product;
             }
-
-            product.Price = price;
-            _context.SaveChanges();
-            return product;
+            catch ( Exception ex )
+            {
+                throw new ArgumentNullException(ex.Message);
+            }
         }
 
         public bool DeleteProduct(int id)
         {
-            var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
-            if (product == null)
+            try
             {
+                var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+                return true;
+            }
+            catch 
+            { 
                 return false;
             }
-
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-            return true;
         }
     }
 }
