@@ -34,9 +34,7 @@ namespace Wallet.DataAccess.Concrete
 
         public async Task<Product> GetByIdAsync(int productId)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == productId)
-                ?? throw new NullReferenceException("Product not found");
-
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == productId);
             return product;
         }
 
