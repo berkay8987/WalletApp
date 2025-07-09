@@ -6,6 +6,7 @@ using Wallet.Business.Abstract;
 using Wallet.Core.Entitites.ViewModels;
 using Wallet.DataAccess.Abstract;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Wallet.Core.Entitites.Enums;
 
 namespace Wallet.API.Controllers
 {
@@ -15,10 +16,13 @@ namespace Wallet.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ITransactionService _transactionService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, 
+                              ITransactionService transactionService)
         {
             _userService = userService;
+            _transactionService = transactionService;
         }
 
         /// <summary>
@@ -43,6 +47,7 @@ namespace Wallet.API.Controllers
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             var newBalance = await _userService.AddBalanceAsync(userId, value);
+            await _transactionService.AddAsync(userId, value, TransactionType.AddBalance);
             return Ok(newBalance);
         }
 
@@ -57,6 +62,7 @@ namespace Wallet.API.Controllers
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
             var newBalance = await _userService.RemoveBalanceAsync(userId, value);
+            await _transactionService.AddAsync(userId, value, TransactionType.RemoveBalance);
             return Ok(newBalance);
         }
 
