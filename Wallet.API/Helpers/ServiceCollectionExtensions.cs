@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using Wallet.Business.Abstract;
+using Wallet.Business.Concrete;
 using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
 using Wallet.DataAccess.Concrete;
@@ -92,6 +94,7 @@ namespace Wallet.API.Helpers
             services.AddScoped<IUserDal, UserDal>();
             services.AddScoped<IProductDal, ProductDal>();
             services.AddScoped<ITransactionDal, TransactionDal>();
+            services.AddScoped<IProductBl, ProductBl>();
 
             services.AddStackExchangeRedisCache(options =>
             {
