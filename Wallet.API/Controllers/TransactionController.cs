@@ -36,13 +36,13 @@ namespace Wallet.API.Controllers
             return Ok(transactions);
         }
 
-        [HttpPost("UpdateTransactionById")]
+        [HttpPut("UpdateTransactionById")]
         public IActionResult UpdateTransactionById()
         {
             return BadRequest("Not implemented");
         }
 
-        [HttpPost("DeleteTransactionById")]
+        [HttpDelete("DeleteTransactionById")]
         public IActionResult DeleteTransactionById()
         {
             return BadRequest("Not implemented");
