@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Wallet.Business.Abstract;
 using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
+using Wallet.Core.Entitites.Enums;
 
 namespace Wallet.Business.Concrete
 {
