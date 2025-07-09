@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using Wallet.Business.Abstract;
 using Wallet.Core.Entitites.Models;
 using Wallet.DataAccess.Abstract;
 using Wallet.DataAccess.Context;
@@ -14,10 +15,13 @@ namespace Wallet.DataAccess.Concrete
     public class ProductDal : IProductDal
     {
         private readonly ApplicationDbContext _context;
+        private readonly IProductBl _productBl;
 
-        public ProductDal(ApplicationDbContext context)
+        public ProductDal(ApplicationDbContext context,
+                          IProductBl productBl)
         {
             _context = context;
+            _productBl = productBl;
         }
 
         public bool CreateProduct(Product product)
@@ -53,7 +57,7 @@ namespace Wallet.DataAccess.Concrete
             try
             {
                 var product = _context.Products.FirstOrDefault(u => u.ProductId == id);
-                product.Price = price;
+                product = _productBl.UpdateProductPrice(product, price);
                 _context.SaveChanges();
                 return product;
             }
