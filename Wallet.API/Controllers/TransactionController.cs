@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using Wallet.Business.Abstract;
 using Wallet.DataAccess.Abstract;
 
 namespace Wallet.API.Controllers
@@ -11,11 +13,11 @@ namespace Wallet.API.Controllers
     [Route("api/[controller]")]
     public class TransactionController : Controller
     {
-        private readonly ITransactionDal _transactionDal;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionController(ITransactionDal transactionDal)
+        public TransactionController(ITransactionService transactionService)
         {
-            _transactionDal = transactionDal;
+            _transactionService = transactionService;
         }
 
         [HttpPost("CreateTransaction")]
@@ -29,10 +31,10 @@ namespace Wallet.API.Controllers
         /// </summary>
         /// <returns>List<Transaction></returns>
         [HttpGet("GetAllTransactions")]
-        public IActionResult GetAllTransactions()
+        public async Task<IActionResult> GetAllTransactions()
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var transactions = _transactionDal.GetAllTransactions(userId);
+            var transactions = await _transactionService.GetAllForUserAsync(userId);
             return Ok(transactions);
         }
 
