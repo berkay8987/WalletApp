@@ -31,7 +31,7 @@ namespace Wallet.API.Controllers
         [HttpGet("GetAllTransactions")]
         public IActionResult GetAllTransactions()
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             var transactions = _transactionDal.GetAllTransactions(userId);
             return Ok(transactions);
         }

@@ -91,10 +91,12 @@ namespace Wallet.API.Helpers
                 });
             #endregion
 
-            services.AddScoped<IUserDal, UserDal>();
-            services.AddScoped<IProductDal, ProductDal>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ITransactionDal, TransactionDal>();
-            services.AddScoped<IProductBl, ProductBl>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddStackExchangeRedisCache(options =>
             {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Wallet.Business.Abstract;
 using Wallet.Core.Entitites.ViewModels;
 using Wallet.DataAccess.Abstract;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -13,11 +14,11 @@ namespace Wallet.API.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserDal _userDal;
+        private readonly IUserService _userService;
 
-        public UserController(IUserDal userDal)
+        public UserController(IUserService userService)
         {
-            _userDal = userDal;
+            _userService = userService;
         }
 
         /// <summary>
@@ -25,10 +26,10 @@ namespace Wallet.API.Controllers
         /// </summary>
         /// <returns>decimal balance</returns>
         [HttpGet("GetBalance")]
-        public IActionResult GetBalance()
+        public async Task<IActionResult> GetBalance()
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var balance = _userDal.GetBalanceByUserId(userId);
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var balance = await _userService.GetBalanceAsync(userId);
             return Ok(balance);
         }
 
@@ -38,10 +39,10 @@ namespace Wallet.API.Controllers
         /// <param name="value">Amount to increase the balance</param>
         /// <returns></returns>
         [HttpPost("AddBalance")]
-        public IActionResult AddBalance([FromBody] decimal value)
+        public async Task<IActionResult> AddBalance([FromBody] decimal value)
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var newBalance = _userDal.AddBalanceByUserId(userId, value);
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var newBalance = await _userService.AddBalanceAsync(userId, value);
             return Ok(newBalance);
         }
 
@@ -52,10 +53,10 @@ namespace Wallet.API.Controllers
         /// <param name="value">Amount to decrease the balance</param>
         /// <returns></returns>
         [HttpPost("RemoveBalance")]
-        public IActionResult RemoveBalance([FromBody] decimal value)
+        public async Task<IActionResult> RemoveBalance([FromBody] decimal value)
         {
             var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var newBalance = _userDal.RemoveBalanceByUserId(userId, value);
+            var newBalance = await _userService.RemoveBalanceAsync(userId, value);
             return Ok(newBalance);
         }
 
@@ -64,10 +65,10 @@ namespace Wallet.API.Controllers
         /// </summary>
         /// <returns>DateTime LastUpdated</returns>
         [HttpGet("GetLastUpdated")]
-        public IActionResult GetLastUpdated()
+        public async Task<IActionResult> GetLastUpdated()
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var lastUpdated = _userDal.GetLastUpdatedByUserId(userId);
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var lastUpdated = await _userService.GetLastUpdatedAsync(userId);
             return Ok(lastUpdated);
         }
 
@@ -76,10 +77,10 @@ namespace Wallet.API.Controllers
         /// </summary>
         /// <returns>User user</returns>
         [HttpGet("GetUserInfo")]
-        public IActionResult GetUserInfo()
+        public async Task<IActionResult> GetUserInfo()
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
-            var user = _userDal.GetUserbyUserId(userId);
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userService.GetUserAsync(userId);
             return Ok(user);
         }
     }

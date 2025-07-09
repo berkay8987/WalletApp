@@ -130,19 +130,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>07/01/2025</td>
-                        <td>Add Balance</td>
-                        <td class="amount-add">+$100.00</td>
-                        <td>Promotion</td>
-                    </tr>
-                    <tr>
-                        <td>06/30/2025</td>
-                        <td>Subtract Balance</td>
-                        <td class="amount-subtract">-$50.00</td>
-                        <td>Purchase</td>
-                    </tr>
-
                     @foreach (var transaction in Model.Transactions)
                     {
                         <tr>
@@ -154,7 +141,6 @@
                             <td>Description</td>
                         </tr>
                     }
-                    <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
                 </tbody>
             </table>
         </div>

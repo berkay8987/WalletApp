@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wallet.DataAccess\Wallet.DataAccess.csproj" />
+    <ProjectReference Include="..\Wallet.Business\Wallet.Business.csproj" />
   </ItemGroup>
 
 </Project>

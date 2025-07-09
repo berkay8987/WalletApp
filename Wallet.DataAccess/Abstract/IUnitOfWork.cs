@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wallet.Business.Abstract;
 
-namespace Wallet.Business.Concrete
+namespace Wallet.DataAccess.Abstract
 {
-    public class UserBl: IUserBl
+    public interface IUnitOfWork
     {
-
+        Task CommitAsync(CancellationToken ct = default);
     }
 }

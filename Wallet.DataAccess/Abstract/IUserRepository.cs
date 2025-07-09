@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Wallet.Core.Entitites.Models;
 
-namespace Wallet.Business.Abstract
+namespace Wallet.DataAccess.Abstract
 {
-    public interface IProductBl
+    public interface IUserRepository
     {
-        Product UpdateProductPrice(Product product, decimal price);
+        Task<User?> GetAsync(string userId);
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
-using Wallet.DataAccess.Context;
 using System.Net.Http.Headers;
 
 namespace Wallet.Web.ViewComponents
