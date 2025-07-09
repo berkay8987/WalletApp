@@ -67,7 +67,7 @@ namespace Wallet.API.Controllers
         /// </summary>
         /// <param name="id">Id of the product to delete</param>
         /// <returns>Http.Success or Http.BadRequest</returns>
-        [HttpPost("DeleteProductById")]
+        [HttpDelete("DeleteProductById")]
         public IActionResult DeleteProductById(int id)
         {
             var success = _productDal.DeleteProduct(id);
