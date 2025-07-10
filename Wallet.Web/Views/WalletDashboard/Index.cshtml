@@ -118,7 +118,7 @@
 
         <div class="history">
             <div style="border-bottom: 1px dotted #444; padding-bottom: 5px; margin-bottom: 10px">
-                🕒 Transaction History (Last 5 transactions)
+                🕒 Transaction History (Last 10 transactions)
             </div>
             <table>
                 <thead>
@@ -130,7 +130,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var transaction in Model.Transactions)
+                    @foreach (var transaction in Model.Transactions.OrderByDescending(u => u.Date).Take(10))
                     {
                         <tr>
                             <td>@transaction.Date</td>
