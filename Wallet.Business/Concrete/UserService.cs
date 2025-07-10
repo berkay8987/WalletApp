@@ -45,24 +45,24 @@ namespace Wallet.Business.Concrete
 
             return user;
         }
-        public async Task<User?> AddBalanceAsync(string userId, decimal value)
+        public async Task<decimal> AddBalanceAsync(string userId, decimal value)
         {
             var user = await _userRepo.GetAsync(userId)
                 ?? throw new KeyNotFoundException();
 
             user.Balance += value;
             await _unitOfWork.CommitAsync();
-            return user;
+            return user.Balance;
         }
 
-        public async Task<User?> RemoveBalanceAsync(string userId, decimal value)
+        public async Task<decimal> RemoveBalanceAsync(string userId, decimal value)
         {
             var user = await _userRepo.GetAsync(userId)
                 ?? throw new KeyNotFoundException();
 
             user.Balance -= value;
             await _unitOfWork.CommitAsync();
-            return user;
+            return user.Balance;
         }
     }
 }
