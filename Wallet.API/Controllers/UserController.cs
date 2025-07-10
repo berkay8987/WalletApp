@@ -60,7 +60,7 @@ namespace Wallet.API.Controllers
         [HttpPost("RemoveBalance")]
         public async Task<IActionResult> RemoveBalance([FromBody] decimal value)
         {
-            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier).Value;
+            var userId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             var newBalance = await _userService.RemoveBalanceAsync(userId, value);
             await _transactionService.AddAsync(userId, value, TransactionType.RemoveBalance);
             return Ok(newBalance);
