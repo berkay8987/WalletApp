@@ -15,8 +15,8 @@ namespace Wallet.Business.Abstract
 
         Task<User?> GetUserAsync(string userId);
 
-        Task<User?> AddBalanceAsync(string userId, decimal value);
+        Task<decimal> AddBalanceAsync(string userId, decimal value);
 
-        Task<User?> RemoveBalanceAsync(string userId, decimal value);
+        Task<decimal> RemoveBalanceAsync(string userId, decimal value);
     }
 }
